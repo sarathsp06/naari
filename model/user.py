@@ -23,6 +23,11 @@ class User(Model):
         else:
             return False
 
+    def location(self, lat = None ,long = None):
+       self['latitude'] = lat or self['latitude']
+       self['longitude'] = lat or self['longitude']
+       return self
+       
     def verify(self,otp):
         if otp is None:
             return false
