@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+sid = '<AcountSid>'
+token = '<AccountToken>'
+exophone =  '04433720571'
+flow_id = '45715'
