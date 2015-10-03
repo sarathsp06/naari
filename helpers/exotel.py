@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import datetime
 import requests
 from settings import sid,token,exophone,flow_id
 class Exotel:
@@ -39,6 +39,16 @@ def sendOtp(number,otp):
     else:
         return False
 
+def smsPolice(numbers,lat,long):
+    #numbers are send in the assending order of distance from occured place
+    for number in numbers:
+        r = exotel.sms(exophone,number,"A crime occured at {} location : {},{}".format(str(datetime.datetime.now()),lat,long))
+        if r.ok:
+            return r.json()['SMSMessage']['Sid']
+        else:
+            return False
+
+
 def callPolice(number):
     r = exotel.call(number,exophone,flow_id,180)
     if r.ok:
@@ -48,3 +58,4 @@ def callPolice(number):
 
 #sendOtp("9742033616",5423)
 #callPolice("9742033616")
+#smsPolice(['9742033616','8907965331'],100,212)
