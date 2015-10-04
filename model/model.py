@@ -7,12 +7,12 @@ class Model(dict):
 		self.client = MongoClient(settings.mongo_host,settings.mongo_port)
 		self.db = self.client[settings.mongo_databse]
 		self.collection = None
-		
+
 	def setData(self,data):
 		if data.get('_id',None) is None and self.get('_id',None )is None:
 			data['_id'] =  uuid.uuid4().get_hex()
 		self.update(data)
-		return True
+		return self
 
 	def save(self):
 		return self.collection.save(self)

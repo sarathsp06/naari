@@ -2,6 +2,7 @@ import random
 from  model import Model
 from helpers import exotel
 from pymongo import  GEOSPHERE
+from settings import PoliceNumbers
 class User(Model):
     def __init__(self,uid = None):
     	Model.__init__(self)
@@ -9,13 +10,26 @@ class User(Model):
         self.collection.create_index([("loc", GEOSPHERE)])
     	if uid is not None:
     		self.update(self.getDoc(uid))
-        print self
 
     def setProfile(self,data):
         if data.has_key('verified'):
             del(data['verified'])
         self.setData(data)
+        self.setRole()
         return self
+
+    def setRole(self):
+       """
+       setRole sets the role for the user which is now  either POLICE or PUBLIC
+       For now checking if one is police or not is done by just checking if the mobile number is in the given list in settings
+       which will later be changed to may be making an http call to some endpoint which has all the phonenumbers of police men
+       """
+       print 'POLICENUMBERS',PoliceNumbers
+       print 'PHONE', str(self['phone'])
+       if str(self['phone']) in PoliceNumbers:
+           self['role'] = 'POLICE'
+       else:
+           self['role'] = 'PUBLIC'
 
     def otp(self):
         self['otp'] = random.randint(0,100000)
@@ -44,4 +58,4 @@ class User(Model):
             return False
 
     def findPolice(self):
-         return [p for p in self.collection.find({"loc": {"$near": self["loc"]}}).limit(10)]
+         return [p for p in self.collection.find({"loc": {"$near": self["loc"]},'role':"POLICE"}).limit(10)]
