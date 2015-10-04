@@ -9,11 +9,11 @@ A REST service to help bangalore police and public
 
 
 ##REST endpoints
- * '/signup'   - signup with name,gender,phone and  age
- * '/otp'      - request to send otp to user identified by user_id
- * '/verify'   - request to verify the user given user id and the otp message recieved
- * '/location' - request to set the location given user_id and location as lat and long
- * '/crime'    - request to notify about possible crime or a situation that demands police help
+ * POST '/signup'   - signup with name,gender,phone and  age
+ * POST '/otp'      - request to send otp to user identified by user_id
+ * POST '/verify'   - request to verify the user given user id and the otp message recieved
+ * POST '/location' - request to set the location given user_id and location as lat and long
+ * POST '/crime'    - request to notify about possible crime or a situation that demands police help
                   on making this request nearest 10 police men will get sms regarding the inident  with location and time in it
                   and nearest one policeman would get a  call from a virtual number connecting the calls other leg to the user who requested
 
